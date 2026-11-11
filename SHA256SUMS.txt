@@ -1,0 +1,2 @@
+bfed35359c23c62cb78439317e9b8fa25bcb6538d76b13f0b1fb02ae49c56292  releases/retrogrzmot-complete-v1.0.0-pl.zip
+bf0d1f4f1eae86b3d9c90c4c5d35302725a4a5f64ff6211614b1d8ece5b69fb4  releases/retrogrzmot-complete-v1.0.0-en.zip

@@ -1,0 +1,23 @@
+#!/bin/bash
+APP=/userdata/system/retrogrzmot/exit_button.py
+PID=/tmp/retrogrzmot-exit.pid
+alive() {
+    [ -f "$PID" ] || return 1
+    local p=$(cat "$PID")
+    [[ "$p" =~ ^[0-9]+$ ]] || return 1
+    [ -r "/proc/$p/cmdline" ] || return 1
+    tr '\0' '\n' < "/proc/$p/cmdline" | grep -Fxq "$APP"
+}
+case "$1" in
+start)
+    alive && exit 0
+    nohup python3 -u "$APP" >>/tmp/retrogrzmot-exit.log 2>&1 </dev/null &
+    echo $! > "$PID"
+    sleep 1
+    alive ;;
+stop)
+    if alive; then kill -TERM "$(cat "$PID")"; fi ;;
+status) alive ;;
+restart) bash "$0" stop; sleep 1; bash "$0" start ;;
+*) exit 2 ;;
+esac
